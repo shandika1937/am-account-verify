@@ -114,7 +114,7 @@ export function LinkStep({ onSubmit, onBack, error, isLoading }: LinkStepProps) 
             ) : (
               <>
                 <ShieldCheck className="size-4" />
-                Verify Account
+                Complete Upgrade
               </>
             )}
           </Button>

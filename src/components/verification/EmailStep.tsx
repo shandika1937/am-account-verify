@@ -52,8 +52,8 @@ export function EmailStep({ onSubmit, error, isLoading }: EmailStepProps) {
           Enter your email
         </h2>
         <p className="text-muted-foreground text-sm leading-relaxed">
-          We&apos;ll send a verification link to confirm your Alight Motion
-          account.
+          We&apos;ll send a verification link to the email associated with your
+          Alight Motion account.
         </p>
       </div>
 
@@ -103,7 +103,7 @@ export function EmailStep({ onSubmit, error, isLoading }: EmailStepProps) {
             </>
           ) : (
             <>
-              Send Magic Link
+              Send Verification Link
               <ArrowRight className="size-4" />
             </>
           )}

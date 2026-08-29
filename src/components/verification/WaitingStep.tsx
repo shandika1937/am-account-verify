@@ -46,7 +46,7 @@ export function WaitingStep({
               <span className="text-xs font-bold text-primary">1</span>
             </div>
             <p className="text-sm text-foreground leading-relaxed">
-              Open your email inbox and look for a message from Alight Motion.
+              Open your email inbox and look for a message from Upgrader AM.
             </p>
           </div>
           <div className="flex items-start gap-3">
@@ -54,7 +54,7 @@ export function WaitingStep({
               <span className="text-xs font-bold text-primary">2</span>
             </div>
             <p className="text-sm text-foreground leading-relaxed">
-              Click the verification link in the email to confirm your account.
+              Click the verification link in the email to confirm your identity.
             </p>
           </div>
           <div className="flex items-start gap-3">
@@ -62,7 +62,7 @@ export function WaitingStep({
               <span className="text-xs font-bold text-primary">3</span>
             </div>
             <p className="text-sm text-foreground leading-relaxed">
-              Copy the verification link and paste it on the next step.
+              Copy the verification link and paste it in the next step to finish your upgrade.
             </p>
           </div>
         </div>

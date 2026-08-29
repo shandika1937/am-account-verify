@@ -9,7 +9,7 @@ import { LinkStep } from "@/components/verification/LinkStep";
 import { SuccessStep } from "@/components/verification/SuccessStep";
 import { useAction } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { Shield, ArrowLeft } from "lucide-react";
+import { Rocket, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -61,8 +61,8 @@ export default function Verify() {
       try {
         await submitVerificationLink({ jobId, link });
         setCurrentStep("success");
-        toast.success("Verification complete!", {
-          description: "Your account has been verified successfully.",
+        toast.success("Upgrade complete!", {
+          description: "Your account has been upgraded to Premium successfully.",
         });
       } catch (err) {
         const message =
@@ -81,7 +81,7 @@ export default function Verify() {
   );
 
   const handleComplete = useCallback(() => {
-    navigate("/");
+    navigate("/dashboard");
   }, [navigate]);
 
   return (
@@ -101,10 +101,10 @@ export default function Verify() {
             </Button>
             <div className="flex items-center gap-2.5">
               <div className="flex items-center justify-center size-8 rounded-lg bg-primary text-primary-foreground">
-                <Shield className="size-4.5" />
+                <Rocket className="size-4.5" />
               </div>
-              <span className="text-lg font-semibold tracking-tight">
-                AM Verify
+              <span className="text-lg font-bold tracking-tight">
+                Upgrader AM
               </span>
             </div>
           </div>

@@ -46,10 +46,11 @@ export function SuccessStep({ email, onComplete }: SuccessStepProps) {
         transition={{ delay: 0.2 }}
       >
         <h2 className="text-2xl font-semibold tracking-tight mb-2">
-          Verification Successful
+          Upgrade Complete
         </h2>
         <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-          Your Alight Motion account has been successfully verified.
+          Your Alight Motion account has been upgraded to Premium for one full
+          year.
         </p>
       </motion.div>
 
@@ -65,7 +66,7 @@ export function SuccessStep({ email, onComplete }: SuccessStepProps) {
             </div>
             <div className="text-left">
               <p className="text-xs text-muted-foreground">
-                Verified email
+                Upgraded email
               </p>
               <p className="text-sm font-medium">{email}</p>
             </div>
@@ -83,7 +84,7 @@ export function SuccessStep({ email, onComplete }: SuccessStepProps) {
           className="w-full h-11 font-medium"
           size="lg"
         >
-          Done
+          Go to Dashboard
         </Button>
       </motion.div>
     </motion.div>

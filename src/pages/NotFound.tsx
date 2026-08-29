@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Shield, ArrowLeft, Home } from "lucide-react";
+import { Rocket, ArrowLeft, Home } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 
@@ -16,12 +16,15 @@ export default function NotFound() {
       {/* Navigation */}
       <nav className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-lg">
         <div className="mx-auto flex h-16 max-w-6xl items-center px-4 sm:px-6">
-          <div className="flex items-center gap-2.5">
+          <div
+            className="flex items-center gap-2.5 cursor-pointer"
+            onClick={() => navigate("/")}
+          >
             <div className="flex items-center justify-center size-8 rounded-lg bg-primary text-primary-foreground">
-              <Shield className="size-4.5" />
+              <Rocket className="size-4.5" />
             </div>
-            <span className="text-lg font-semibold tracking-tight">
-              AM Verify
+            <span className="text-lg font-bold tracking-tight">
+              Upgrader AM
             </span>
           </div>
         </div>
@@ -48,10 +51,7 @@ export default function NotFound() {
             transition={{ delay: 0.2 }}
             className="flex items-center justify-center gap-3"
           >
-            <Button
-              variant="outline"
-              onClick={() => navigate(-1)}
-            >
+            <Button variant="outline" onClick={() => navigate(-1)}>
               <ArrowLeft className="size-4" />
               Go Back
             </Button>
