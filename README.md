@@ -1,3 +1,30 @@
+# AM Account Verification
+
+Website untuk membantu proses verifikasi akun Alight Motion secara resmi.
+
+Alur: **Email → Verifikasi Email → Verifikasi Link → Selesai**.
+
+Kunci API (`ALIGHT_MOTION_API_KEY`) hanya ada di server (Convex environment). Frontend tidak pernah menampilkan password. Jika API resmi tidak dikonfigurasi, backend memakai mock adapter.
+
+## Menjalankan project
+
+```bash
+bun install
+cp .env.example .env
+bun run dev
+```
+
+Set `VITE_CONVEX_URL` (dan Convex env `ALIGHT_MOTION_API_KEY` jika ada). Tanpa API key, mode mock tetap bisa diuji.
+
+Struktur penting:
+
+- `src/pages` — frontend (Landing, Verify, Dashboard)
+- `src/components` — UI reusable + langkah verifikasi
+- `src/lib/validation.ts` — validasi Zod
+- `src/convex/verification.ts` — backend/API proxy + mock adapter
+
+---
+
 ## Overview
 
 This project uses the following tech stack:

@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Mail, ArrowRight, Loader2 } from "lucide-react";
-import { useState } from "react";
-import { emailSchema, type EmailFormData } from "@/lib/validation";
+import { emailSchema } from "@/lib/validation";
 import { motion } from "framer-motion";
+import { ArrowRight, Loader2, Mail } from "lucide-react";
+import { useState } from "react";
 
 interface EmailStepProps {
   onSubmit: (email: string) => Promise<void>;
@@ -38,39 +38,38 @@ export function EmailStep({ onSubmit, error, isLoading }: EmailStepProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -12 }}
-      transition={{ duration: 0.3 }}
-      className="w-full max-w-md mx-auto"
+      transition={{ duration: 0.28 }}
+      className="am-panel mx-auto w-full max-w-md p-6 sm:p-8"
     >
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center size-16 rounded-2xl bg-primary/10 mb-4">
-          <Mail className="size-7 text-primary" />
-        </div>
-        <h2 className="text-2xl font-semibold tracking-tight mb-2">
-          Enter your email
-        </h2>
-        <p className="text-muted-foreground text-sm leading-relaxed">
-          We&apos;ll send a verification link to the email associated with your
-          Alight Motion account.
+      <p className="am-kicker mb-4">
+        <span className="size-1.5 bg-primary" />
+        Langkah 01
+      </p>
+      <div className="mb-7">
+        <h2 className="font-display text-2xl font-bold tracking-tight">Masukkan email kamu</h2>
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+          Gunakan email yang terhubung dengan akun Alight Motion. Kami hanya mengirim magic link —
+          password tidak pernah diminta atau ditampilkan.
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="email" className="text-sm font-medium">
-            Email address
+            Alamat email
           </Label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <Mail className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               id="email"
               type="email"
-              placeholder="you@example.com"
+              placeholder="nama@email.com"
               value={email}
               onChange={handleChange}
-              className="pl-10 h-11"
+              className="h-11 rounded-sm pl-10"
               disabled={isLoading}
               autoComplete="email"
               autoFocus
@@ -93,17 +92,17 @@ export function EmailStep({ onSubmit, error, isLoading }: EmailStepProps) {
 
         <Button
           type="submit"
-          className="w-full h-11 font-medium"
+          className="h-11 w-full rounded-sm font-semibold"
           disabled={isLoading || !email.trim()}
         >
           {isLoading ? (
             <>
               <Loader2 className="size-4 animate-spin" />
-              Sending verification link...
+              Mengirim magic link...
             </>
           ) : (
             <>
-              Send Verification Link
+              Kirim Magic Link
               <ArrowRight className="size-4" />
             </>
           )}

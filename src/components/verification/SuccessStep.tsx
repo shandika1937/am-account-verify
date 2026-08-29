@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Mail, PartyPopper } from "lucide-react";
 import { motion } from "framer-motion";
+import { Check, Mail } from "lucide-react";
 
 interface SuccessStepProps {
   email: string;
@@ -10,83 +10,41 @@ interface SuccessStepProps {
 export function SuccessStep({ email, onComplete }: SuccessStepProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      className="w-full max-w-md mx-auto text-center"
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35, ease: "easeOut" }}
+      className="am-panel mx-auto w-full max-w-md p-6 text-center sm:p-8"
     >
-      {/* Success animation */}
-      <div className="relative inline-block mb-6">
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{
-            type: "spring",
-            stiffness: 200,
-            damping: 15,
-            delay: 0.1,
-          }}
-          className="inline-flex items-center justify-center size-20 rounded-full bg-green-500/10"
-        >
-          <CheckCircle2 className="size-10 text-green-500" />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="absolute -top-2 -right-2"
-        >
-          <PartyPopper className="size-6 text-amber-500" />
-        </motion.div>
+      <motion.div
+        initial={{ scale: 0.6, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 220, damping: 16, delay: 0.05 }}
+        className="mx-auto mb-6 flex size-16 items-center justify-center border-2 border-chart-2 text-chart-2"
+      >
+        <Check className="size-8" strokeWidth={2.4} />
+      </motion.div>
+
+      <p className="am-kicker mb-3 justify-center">Status</p>
+      <h2 className="font-display text-2xl font-bold tracking-tight">
+        Verifikasi Berhasil
+      </h2>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+        Email berikut telah diverifikasi. Tidak ada password atau data sensitif
+        yang ditampilkan.
+      </p>
+
+      <div className="mt-6 flex items-center justify-center gap-2 border border-border bg-secondary/50 px-3 py-2.5 text-sm font-medium">
+        <Mail className="size-3.5 text-chart-2" />
+        <span className="truncate">{email}</span>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
+      <Button
+        onClick={onComplete}
+        className="mt-8 h-11 w-full rounded-sm font-semibold"
+        size="lg"
       >
-        <h2 className="text-2xl font-semibold tracking-tight mb-2">
-          Upgrade Complete
-        </h2>
-        <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-          Your Alight Motion account has been upgraded to Premium for one full
-          year.
-        </p>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-      >
-        <div className="rounded-xl border bg-card p-5 mb-8">
-          <div className="flex items-center justify-center gap-3">
-            <div className="inline-flex items-center justify-center size-8 rounded-lg bg-green-500/10">
-              <Mail className="size-4 text-green-500" />
-            </div>
-            <div className="text-left">
-              <p className="text-xs text-muted-foreground">
-                Upgraded email
-              </p>
-              <p className="text-sm font-medium">{email}</p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-      >
-        <Button
-          onClick={onComplete}
-          className="w-full h-11 font-medium"
-          size="lg"
-        >
-          Go to Dashboard
-        </Button>
-      </motion.div>
+        Selesai
+      </Button>
     </motion.div>
   );
 }

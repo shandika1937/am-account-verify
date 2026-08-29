@@ -1,277 +1,105 @@
-import { Button } from "@/components/ui/button";
+import { AppShell } from "@/components/AppShell";
+import { motion } from "framer-motion";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import {
-  Rocket,
-  ArrowLeft,
-  Users,
-  TrendingUp,
+  Activity,
   CheckCircle2,
   Clock,
-  XCircle,
-  BarChart3,
-  Settings,
   Shield,
-  Activity,
+  Users,
 } from "lucide-react";
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router";
-import { useAuth } from "@/hooks/use-auth";
 
 const stats = [
-  { label: "Total Users", value: "1,248", icon: Users, change: "+12%" },
-  { label: "Upgrades Today", value: "47", icon: TrendingUp, change: "+8%" },
-  { label: "Completed", value: "1,180", icon: CheckCircle2, change: "94.5%" },
-  { label: "Pending", value: "21", icon: Clock, change: "Active" },
+  { label: "Sesi hari ini", value: "47", icon: Activity },
+  { label: "Berhasil", value: "41", icon: CheckCircle2 },
+  { label: "Menunggu", value: "4", icon: Clock },
+  { label: "Pengguna dasbor", value: "128", icon: Users },
 ];
 
-const recentUpgrades = [
-  {
-    id: "UPG-001",
-    email: "user1@example.com",
-    status: "completed",
-    date: "Aug 29, 2026",
-  },
-  {
-    id: "UPG-002",
-    email: "user2@example.com",
-    status: "pending",
-    date: "Aug 29, 2026",
-  },
-  {
-    id: "UPG-003",
-    email: "user3@example.com",
-    status: "completed",
-    date: "Aug 28, 2026",
-  },
-  {
-    id: "UPG-004",
-    email: "user4@example.com",
-    status: "failed",
-    date: "Aug 28, 2026",
-  },
-  {
-    id: "UPG-005",
-    email: "user5@example.com",
-    status: "completed",
-    date: "Aug 27, 2026",
-  },
+const recent = [
+  { id: "JOB-001", email: "user1@example.com", status: "completed", date: "29 Agu 2026" },
+  { id: "JOB-002", email: "user2@example.com", status: "pending", date: "29 Agu 2026" },
+  { id: "JOB-003", email: "user3@example.com", status: "completed", date: "28 Agu 2026" },
+  { id: "JOB-004", email: "user4@example.com", status: "failed", date: "28 Agu 2026" },
 ];
 
 const statusStyles: Record<string, string> = {
-  completed:
-    "bg-green-500/10 text-green-600 dark:text-green-400",
-  pending:
-    "bg-amber-500/10 text-amber-600 dark:text-amber-400",
-  failed:
-    "bg-destructive/10 text-destructive",
+  completed: "text-chart-2",
+  pending: "text-primary",
+  failed: "text-destructive",
 };
 
-const statusIcons: Record<string, React.ElementType> = {
-  completed: CheckCircle2,
-  pending: Clock,
-  failed: XCircle,
+const statusLabel: Record<string, string> = {
+  completed: "Berhasil",
+  pending: "Menunggu",
+  failed: "Gagal",
 };
 
 export default function Admin() {
-  const navigate = useNavigate();
-  const { user, signOut } = useAuth();
-
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <nav className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-lg">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <div className="flex items-center gap-2.5">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="size-8"
-              onClick={() => navigate("/dashboard")}
-              aria-label="Go back to dashboard"
-            >
-              <ArrowLeft className="size-4" />
-            </Button>
-            <div
-              className="flex items-center gap-2.5 cursor-pointer"
-              onClick={() => navigate("/")}
-            >
-              <div className="flex items-center justify-center size-8 rounded-lg bg-primary text-primary-foreground">
-                <Rocket className="size-4.5" />
-              </div>
-              <span className="text-lg font-bold tracking-tight">Admin</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => navigate("/dashboard")}
-            >
-              Dashboard
-            </Button>
-          </div>
-        </div>
-      </nav>
+    <AppShell>
+      <p className="am-kicker mb-2">Admin</p>
+      <h1 className="font-display text-3xl font-bold tracking-tight">Monitor sesi</h1>
+      <p className="mt-2 text-sm text-muted-foreground">
+        Ringkasan operasional. Tautan verifikasi dan API key tidak ditampilkan di sini.
+      </p>
 
-      <main className="mx-auto max-w-6xl px-4 sm:px-6 py-10">
-        {/* Page header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight">
-              Admin Panel
-            </h1>
-            <p className="text-muted-foreground mt-1">
-              Manage users, monitor upgrades, and configure settings.
-            </p>
-          </div>
-          <Button variant="outline" size="sm">
-            <Settings className="size-4" />
-            Settings
-          </Button>
-        </div>
+      <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
+        {stats.map((stat, index) => (
+          <motion.div
+            key={stat.label}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.28, delay: index * 0.04 }}
+            className="am-panel p-4"
+          >
+            <stat.icon className="mb-3 size-4 text-primary" />
+            <p className="font-display text-2xl font-bold">{stat.value}</p>
+            <p className="mt-1 text-xs text-muted-foreground">{stat.label}</p>
+          </motion.div>
+        ))}
+      </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
-            >
-              <Card>
-                <CardContent className="py-5">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                      <stat.icon className="size-4" />
-                    </div>
-                    <span className="text-xs font-medium text-green-600 dark:text-green-400">
-                      {stat.change}
-                    </span>
-                  </div>
-                  <p className="text-2xl font-bold">{stat.value}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {stat.label}
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="grid lg:grid-cols-3 gap-6">
-          {/* Recent Upgrades Table */}
-          <div className="lg:col-span-2">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-base">
-                  <Activity className="size-4" />
-                  Recent Upgrades
-                </CardTitle>
-                <CardDescription>
-                  Latest upgrade requests and their current status
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="divide-y">
-                  {recentUpgrades.map((upgrade) => {
-                    const StatusIcon = statusIcons[upgrade.status];
-                    return (
-                      <div
-                        key={upgrade.id}
-                        className="flex items-center justify-between py-3 first:pt-0 last:pb-0"
-                      >
-                        <div className="flex items-center gap-3 min-w-0">
-                          <div className="text-xs font-mono text-muted-foreground shrink-0 w-16">
-                            {upgrade.id}
-                          </div>
-                          <div className="min-w-0">
-                            <p className="text-sm font-medium truncate">
-                              {upgrade.email}
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              {upgrade.date}
-                            </p>
-                          </div>
-                        </div>
-                        <span
-                          className={`inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full shrink-0 ${statusStyles[upgrade.status]}`}
-                        >
-                          <StatusIcon className="size-3" />
-                          {upgrade.status.charAt(0).toUpperCase() + upgrade.status.slice(1)}
-                        </span>
-                      </div>
-                    );
-                  })}
+      <div className="mt-6 grid gap-4 lg:grid-cols-3">
+        <div className="am-panel p-5 lg:col-span-2">
+          <h2 className="font-display text-base font-bold">Sesi terbaru</h2>
+          <div className="mt-4 divide-y divide-border">
+            {recent.map((row) => (
+              <div
+                key={row.id}
+                className="flex items-center justify-between py-3 first:pt-0 last:pb-0"
+              >
+                <div className="min-w-0">
+                  <p className="font-mono text-[11px] text-muted-foreground">{row.id}</p>
+                  <p className="truncate text-sm font-medium">{row.email}</p>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* System Health */}
-          <div className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-base">
-                  <BarChart3 className="size-4" />
-                  System Health
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {[
-                  { label: "API Response", value: "42ms", ok: true },
-                  { label: "Verification Service", value: "Online", ok: true },
-                  { label: "Email Service", value: "Online", ok: true },
-                  { label: "Database", value: "Online", ok: true },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="flex items-center justify-between"
-                  >
-                    <span className="text-sm text-muted-foreground">
-                      {item.label}
-                    </span>
-                    <span
-                      className={`text-sm font-medium ${item.ok ? "text-green-600 dark:text-green-400" : "text-destructive"}`}
-                    >
-                      {item.value}
-                    </span>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-base">
-                  <Shield className="size-4" />
-                  Security
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {[
-                  "Rate limiting active",
-                  "Input sanitization enabled",
-                  "API keys secured server-side",
-                ].map((item) => (
-                  <div key={item} className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 className="size-3.5 text-green-500 shrink-0" />
-                    {item}
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+                <span className={`text-xs font-semibold ${statusStyles[row.status]}`}>
+                  {statusLabel[row.status]}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
-      </main>
-    </div>
+
+        <div className="am-panel p-5">
+          <div className="mb-4 flex items-center gap-2">
+            <Shield className="size-4 text-primary" />
+            <h2 className="font-display text-base font-bold">Kontrol</h2>
+          </div>
+          <ul className="space-y-3 text-sm">
+            {[
+              "Rate limiting aktif",
+              "API key hanya di environment",
+              "Mock adapter jika API resmi tidak tersedia",
+              "Tidak ada log tautan produksi",
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-chart-2" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </AppShell>
   );
 }

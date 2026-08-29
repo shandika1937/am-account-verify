@@ -7,9 +7,9 @@ import { z } from "zod";
 export const emailSchema = z.object({
   email: z
     .string()
-    .min(1, "Email is required")
-    .email("Please enter a valid email address")
-    .max(254, "Email is too long")
+    .min(1, "Email wajib diisi")
+    .email("Masukkan alamat email yang valid")
+    .max(254, "Email terlalu panjang")
     .transform((val) => val.trim().toLowerCase()),
 });
 
@@ -22,11 +22,11 @@ export type EmailFormData = z.infer<typeof emailSchema>;
 export const verificationLinkSchema = z.object({
   link: z
     .string()
-    .min(1, "Verification link is required")
-    .url("Please enter a valid URL")
+    .min(1, "Link verifikasi wajib diisi")
+    .url("Masukkan URL yang valid")
     .refine(
       (val) => val.startsWith("http://") || val.startsWith("https://"),
-      "URL must start with http:// or https://",
+      "URL harus diawali http:// atau https://",
     ),
 });
 
