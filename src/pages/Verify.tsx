@@ -1,20 +1,25 @@
-import { useState, useCallback } from "react";
-import { useNavigate } from "react-router";
-import { AnimatePresence } from "framer-motion";
+import { AmbientBackdrop } from "@/components/AmbientBackdrop";
+import { BrandMark } from "@/components/BrandMark";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { StepProgress, type StepId } from "@/components/verification/StepProgress";
-import { EmailStep } from "@/components/verification/EmailStep";
-import { WaitingStep } from "@/components/verification/WaitingStep";
-import { LinkStep } from "@/components/verification/LinkStep";
-import { SuccessStep } from "@/components/verification/SuccessStep";
-import { useAction } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import { Rocket, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { EmailStep } from "@/components/verification/EmailStep";
+import { LinkStep } from "@/components/verification/LinkStep";
+import { StepProgress, type StepId } from "@/components/verification/StepProgress";
+import { SuccessStep } from "@/components/verification/SuccessStep";
+import { WaitingStep } from "@/components/verification/WaitingStep";
+import { api } from "@/convex/_generated/api";
+import { mapVerificationError } from "@/lib/errors";
+import { useAuth } from "@/hooks/use-auth";
+import { useAction } from "convex/react";
+import { AnimatePresence } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
 export default function Verify() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const requestVerification = useAction(api.verification.requestVerification);
   const submitVerificationLink = useAction(api.verification.submitVerificationLink);
 
@@ -34,18 +39,13 @@ export default function Verify() {
         setEmail(submittedEmail);
         setJobId(result.jobId);
         setCurrentStep("waiting");
-        toast.success("Verification link sent", {
-          description: "Check your inbox for the verification email.",
+        toast.success("Magic link dikirim", {
+          description: "Periksa inbox email kamu.",
         });
       } catch (err) {
-        const message =
-          err instanceof Error
-            ? err.message
-            : "Something went wrong. Please try again.";
+        const message = mapVerificationError(err);
         setError(message);
-        toast.error("Failed to send verification", {
-          description: message,
-        });
+        toast.error("Gagal mengirim magic link", { description: message });
       } finally {
         setIsLoading(false);
       }
@@ -61,18 +61,13 @@ export default function Verify() {
       try {
         await submitVerificationLink({ jobId, link });
         setCurrentStep("success");
-        toast.success("Upgrade complete!", {
-          description: "Your account has been upgraded to Premium successfully.",
+        toast.success("Verifikasi berhasil", {
+          description: "Akun email kamu sudah terverifikasi.",
         });
       } catch (err) {
-        const message =
-          err instanceof Error
-            ? err.message
-            : "Verification failed. Please try again.";
+        const message = mapVerificationError(err);
         setError(message);
-        toast.error("Verification failed", {
-          description: message,
-        });
+        toast.error("Verifikasi gagal", { description: message });
       } finally {
         setIsLoading(false);
       }
@@ -81,44 +76,43 @@ export default function Verify() {
   );
 
   const handleComplete = useCallback(() => {
-    navigate("/dashboard");
-  }, [navigate]);
+    navigate(isAuthenticated ? "/dashboard" : "/");
+  }, [isAuthenticated, navigate]);
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <nav className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-lg">
+    <div className="relative min-h-screen bg-background">
+      <AmbientBackdrop />
+
+      <nav className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2">
             <Button
               variant="ghost"
               size="icon"
               className="size-8"
               onClick={() => navigate("/")}
-              aria-label="Go back to home"
+              aria-label="Kembali ke beranda"
             >
               <ArrowLeft className="size-4" />
             </Button>
-            <div className="flex items-center gap-2.5">
-              <div className="flex items-center justify-center size-8 rounded-lg bg-primary text-primary-foreground">
-                <Rocket className="size-4.5" />
-              </div>
-              <span className="text-lg font-bold tracking-tight">
-                Upgrader AM
-              </span>
-            </div>
+            <button
+              type="button"
+              onClick={() => navigate("/")}
+              className="cursor-pointer"
+              aria-label="Beranda"
+            >
+              <BrandMark />
+            </button>
           </div>
           <ThemeToggle />
         </div>
       </nav>
 
-      {/* Progress */}
-      <div className="pt-10 px-4 sm:px-6">
+      <div className="relative px-4 pt-10 sm:px-6">
         <StepProgress currentStep={currentStep} />
       </div>
 
-      {/* Content */}
-      <main className="px-4 sm:px-6 pb-20 pt-4">
+      <main className="relative px-4 pb-20 pt-2 sm:px-6">
         <AnimatePresence mode="wait">
           {currentStep === "email" && (
             <EmailStep
@@ -132,7 +126,10 @@ export default function Verify() {
             <WaitingStep
               key="waiting"
               email={email}
-              onContinue={() => setCurrentStep("link")}
+              onContinue={() => {
+                setError(null);
+                setCurrentStep("link");
+              }}
               onBack={() => {
                 setCurrentStep("email");
                 setError(null);
@@ -150,11 +147,7 @@ export default function Verify() {
             />
           )}
           {currentStep === "success" && (
-            <SuccessStep
-              key="success"
-              email={email}
-              onComplete={handleComplete}
-            />
+            <SuccessStep key="success" email={email} onComplete={handleComplete} />
           )}
         </AnimatePresence>
       </main>

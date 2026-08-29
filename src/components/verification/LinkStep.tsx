@@ -1,13 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Link2, ArrowLeft, Loader2, ShieldCheck } from "lucide-react";
-import { useState } from "react";
-import {
-  verificationLinkSchema,
-  type VerificationLinkFormData,
-} from "@/lib/validation";
+import { Textarea } from "@/components/ui/textarea";
+import { verificationLinkSchema } from "@/lib/validation";
 import { motion } from "framer-motion";
+import { ArrowLeft, Loader2, ShieldCheck } from "lucide-react";
+import { useState } from "react";
 
 interface LinkStepProps {
   onSubmit: (link: string) => Promise<void>;
@@ -42,35 +39,35 @@ export function LinkStep({ onSubmit, onBack, error, isLoading }: LinkStepProps) 
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -12 }}
-      transition={{ duration: 0.3 }}
-      className="w-full max-w-md mx-auto"
+      transition={{ duration: 0.28 }}
+      className="am-panel mx-auto w-full max-w-md p-6 sm:p-8"
     >
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center size-16 rounded-2xl bg-primary/10 mb-4">
-          <Link2 className="size-7 text-primary" />
-        </div>
-        <h2 className="text-2xl font-semibold tracking-tight mb-2">
-          Paste verification link
-        </h2>
-        <p className="text-muted-foreground text-sm leading-relaxed">
-          Copy the verification link from your email and paste it below.
-        </p>
-      </div>
+      <p className="am-kicker mb-4">
+        <span className="size-1.5 bg-primary" />
+        Langkah 03
+      </p>
+      <h2 className="font-display text-2xl font-bold tracking-tight">
+        Tempel link verifikasi
+      </h2>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+        Masukkan URL yang kamu terima di email. Link diproses di server dan tidak
+        disimpan lebih lama dari yang diperlukan.
+      </p>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="mt-7 space-y-4">
         <div className="space-y-2">
           <Label htmlFor="verification-link" className="text-sm font-medium">
-            Verification link
+            URL verifikasi
           </Label>
           <Textarea
             id="verification-link"
-            placeholder="https://alightmotion.com/verify/..."
+            placeholder="https://..."
             value={link}
             onChange={handleChange}
-            className="min-h-[100px] font-mono text-sm resize-none"
+            className="min-h-[110px] resize-none rounded-sm font-mono text-sm"
             disabled={isLoading}
             autoComplete="off"
             autoFocus
@@ -95,26 +92,26 @@ export function LinkStep({ onSubmit, onBack, error, isLoading }: LinkStepProps) 
             type="button"
             variant="outline"
             onClick={onBack}
-            className="shrink-0"
+            className="h-11 shrink-0 rounded-sm"
             disabled={isLoading}
           >
             <ArrowLeft className="size-4" />
-            Back
+            Kembali
           </Button>
           <Button
             type="submit"
-            className="flex-1 h-11 font-medium"
+            className="h-11 flex-1 rounded-sm font-semibold"
             disabled={isLoading || !link.trim()}
           >
             {isLoading ? (
               <>
                 <Loader2 className="size-4 animate-spin" />
-                Verifying...
+                Memverifikasi...
               </>
             ) : (
               <>
                 <ShieldCheck className="size-4" />
-                Complete Upgrade
+                Verifikasi
               </>
             )}
           </Button>

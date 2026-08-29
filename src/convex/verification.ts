@@ -45,7 +45,7 @@ export const requestVerification = action({
 
     if (recentRequests.length >= 3) {
       throw new Error(
-        "Too many verification requests. Please wait a minute before trying again.",
+        "Terlalu banyak permintaan. Tunggu sebentar, lalu coba lagi.",
       );
     }
 
@@ -93,7 +93,7 @@ export const submitVerificationLink = action({
 
     if (!verification) {
       throw new Error(
-        "Verification session has expired. Please start over by requesting a new verification link.",
+        "Sesi verifikasi sudah kedaluwarsa. Mulai ulang dengan mengirim magic link baru.",
       );
     }
 
@@ -102,7 +102,7 @@ export const submitVerificationLink = action({
     if (now - verification.createdAt > 3_600_000) {
       mockVerificationStore.delete(args.jobId);
       throw new Error(
-        "Verification session has expired. Please start over by requesting a new verification link.",
+        "Sesi verifikasi sudah kedaluwarsa. Mulai ulang dengan mengirim magic link baru.",
       );
     }
 

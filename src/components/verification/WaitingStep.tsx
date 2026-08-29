@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Mail, Clock, ArrowRight, Loader2, RefreshCw } from "lucide-react";
 import { motion } from "framer-motion";
+import { ArrowRight, Inbox, Loader2, Mail, RefreshCw } from "lucide-react";
 
 interface WaitingStepProps {
   email: string;
@@ -17,73 +17,57 @@ export function WaitingStep({
 }: WaitingStepProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -12 }}
-      transition={{ duration: 0.3 }}
-      className="w-full max-w-md mx-auto"
+      transition={{ duration: 0.28 }}
+      className="am-panel mx-auto w-full max-w-md p-6 sm:p-8"
     >
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center size-16 rounded-2xl bg-primary/10 mb-4">
-          <Clock className="size-7 text-primary" />
+      <p className="am-kicker mb-4">
+        <span className="am-pulse size-1.5 bg-chart-2" />
+        Langkah 02
+      </p>
+
+      <h2 className="font-display text-2xl font-bold tracking-tight">
+        Menunggu link verifikasi...
+      </h2>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+        Periksa inbox email kamu dan buka link verifikasi yang dikirim.
+      </p>
+
+      <div className="mt-5 flex items-center gap-2 border border-border bg-secondary/60 px-3 py-2.5 text-sm font-medium">
+        <Mail className="size-3.5 shrink-0 text-primary" />
+        <span className="truncate">{email}</span>
+      </div>
+
+      <div className="mt-6 space-y-3 text-sm leading-relaxed">
+        <div className="flex gap-3">
+          <Inbox className="mt-0.5 size-4 shrink-0 text-primary" />
+          <p>Buka inbox (dan folder spam) untuk email verifikasi.</p>
         </div>
-        <h2 className="text-2xl font-semibold tracking-tight mb-2">
-          Check your inbox
-        </h2>
-        <p className="text-muted-foreground text-sm leading-relaxed">
-          We&apos;ve sent a verification link to:
-        </p>
-        <div className="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-secondary-foreground text-sm font-medium">
-          <Mail className="size-3.5" />
-          {email}
+        <div className="flex gap-3">
+          <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center text-[11px] font-bold text-primary">
+            2
+          </span>
+          <p>Salin tautan verifikasi dari email tersebut, jangan bagikan ke siapa pun.</p>
         </div>
       </div>
 
-      <div className="rounded-xl border bg-card p-5 mb-6">
-        <div className="space-y-3">
-          <div className="flex items-start gap-3">
-            <div className="size-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-              <span className="text-xs font-bold text-primary">1</span>
-            </div>
-            <p className="text-sm text-foreground leading-relaxed">
-              Open your email inbox and look for a message from Upgrader AM.
-            </p>
-          </div>
-          <div className="flex items-start gap-3">
-            <div className="size-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-              <span className="text-xs font-bold text-primary">2</span>
-            </div>
-            <p className="text-sm text-foreground leading-relaxed">
-              Click the verification link in the email to confirm your identity.
-            </p>
-          </div>
-          <div className="flex items-start gap-3">
-            <div className="size-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-              <span className="text-xs font-bold text-primary">3</span>
-            </div>
-            <p className="text-sm text-foreground leading-relaxed">
-              Copy the verification link and paste it in the next step to finish your upgrade.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-3">
+      <div className="mt-8 space-y-2">
         <Button
           onClick={onContinue}
-          className="w-full h-11 font-medium"
+          className="h-11 w-full rounded-sm font-semibold"
           disabled={isLoading}
         >
           {isLoading ? (
             <Loader2 className="size-4 animate-spin" />
           ) : (
             <>
-              I have the verification link
+              Saya Sudah Mendapatkan Link
               <ArrowRight className="size-4" />
             </>
           )}
         </Button>
-
         <Button
           variant="ghost"
           onClick={onBack}
@@ -91,7 +75,7 @@ export function WaitingStep({
           disabled={isLoading}
         >
           <RefreshCw className="size-4" />
-          Use a different email
+          Gunakan email lain
         </Button>
       </div>
     </motion.div>

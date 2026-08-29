@@ -23,8 +23,11 @@ const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 // Simple loading fallback for route transitions
 function RouteLoading() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="animate-pulse text-muted-foreground">Loading...</div>
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <span className="am-pulse size-2 bg-primary" />
+        Memuat...
+      </div>
     </div>
   );
 }
